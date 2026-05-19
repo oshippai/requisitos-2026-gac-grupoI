@@ -108,7 +108,7 @@ Detalha o fluxo principal de retirada e devolução do ativo no tempo.
 
 ## Acesso do Professor
 Captura de ecrã comprovando o envio do convite de colaboração para o utilizador `profBezerra` no repositório oficial da equipa.
-<img src="images/evidencia_github.png" width="600" alt="Evidência de Adição de Colaborador no GitHub"/>
+<img src="images/evidencia_github.jpg" width="600" alt="Evidência de Adição de Colaborador no GitHub"/>
 
 ---
 
