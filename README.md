@@ -92,7 +92,7 @@ O mapeamento das partes interessadas envolvidas e afetadas pelo sistema GAC é c
 
 ## Diagrama de Casos de Uso
 Representa as interações entre os atores (Professor e Atendente) e o Sistema GAC.
-<img src="images/casos_de_uso.png" width="600" alt="Diagrama de Casos de Uso"/>
+<img src="images/casos_de_uso.jpg" width="600" alt="Diagrama de Casos de Uso"/>
 
 ## Diagrama de Classes
 Modela as entidades principais do sistema (`Usuario`, `Equipamento`, `Emprestimo`, `Checklist`).
