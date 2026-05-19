@@ -4,7 +4,7 @@
 
 *Projeto de Engenharia de Requisitos Aplicada ao Contexto Educacional*
 
-<img src="images/logo_gac_fundobranco.jpg" width="225" alt="GAC - Gestão de Ativos do CCT"/>
+<img src="images/logo_gac_fundobranco.jpg" width="200" alt="GAC - Gestão de Ativos do CCT"/>
 
 **Disciplina:** Requisitos e Modelagem de Sistemas  
 **Professor:** Marcelo Bezerra  
