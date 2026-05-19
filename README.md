@@ -5,6 +5,7 @@
 *Projeto de Engenharia de Requisitos Aplicada ao Contexto Educacional*
 
 <img src="images/logo_gac_fundobranco.jpg" width="200" alt="GAC - Gestão de Ativos do CCT"/>
+<img src="images/logo_gac_fundobranco.jpg" width="150" alt="UNIFOR"/>
 
 **Disciplina:** Requisitos e Modelagem de Sistemas  
 **Professor:** Marcelo Bezerra  
@@ -108,6 +109,7 @@ Detalha o fluxo principal de retirada e devolução do ativo no tempo.
 
 ## Acesso do Professor
 Captura de tela comprovando o envio do convite de colaboração para o usuário `profBezerra` no repositório oficial da equipe.
+
 <img src="images/evidencia_github.jpg" width="600" alt="Evidência de Adição de Colaborador no GitHub"/>
 
 ---
