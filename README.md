@@ -2,7 +2,7 @@
 
 ## Documento de Visão e Elicitação de Requisitos
 
-*Projeto de Engenharia de Requisitos Aplicada ao Contexto Educacional*
+*Projeto de Requisitos e Modelagem de Sistemas Aplicado ao Contexto Educacional*
 
 <img src="images/logo_gac_fundobranco.jpg" width="200" alt="GAC - Gestão de Ativos do CCT"/> <img src="images/logo_unifor.png" width="50" alt="UNIFOR"/>
 
