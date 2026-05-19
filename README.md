@@ -17,10 +17,10 @@
 # 1. Documento de Visão do Produto (Issue #1 - Sprint 1)
 
 ## O Problema
-Atualmente, a locação de projetores (um total de 36 equipamentos) e chaves no CCT é realizada de forma estritamente manual. O processo envolve cadernos de registro físico, planilhas do Google e formulários de papel separados para a retirada e a devolução. Esse modelo operacional analógico gera dores constantes para a equipa de atendimento, resultando em atrasos, erros de anotação e alto índice de retrabalho. Além disso, a ausência de um sistema centralizado cria um "ponto cego" de controlo visual, dificultando o rastreio ágil de pendências, como itens não devolvidos, danos físicos aos equipamentos ou a falta de acessórios essenciais (ex: cabos HDMI).
+Atualmente, a locação de projetores (um total de 36 equipamentos) e chaves no CCT é realizada de forma estritamente manual. O processo envolve cadernos de registro físico, planilhas do Google e formulários de papel separados para a retirada e a devolução. Esse modelo operacional analógico gera dores constantes para a equipe de atendimento, resultando em atrasos, erros de anotação e alto índice de retrabalho. Além disso, a ausência de um sistema centralizado cria um "ponto cego" de controle visual, dificultando o rastreio ágil de pendências, como itens não devolvidos, danos físicos aos equipamentos ou a falta de acessórios essenciais (ex: cabos HDMI).
 
 ## A Solução Proposta
-O sistema GAC (Gestão de Ativos do CCT) tem como objetivo principal digitalizar e unificar a gestão do inventário. A plataforma substituirá o controlo em papel por um fluxo de trabalho ágil e digital, garantindo rastreabilidade em tempo real. Isso será alcançado através da implementação de um aceite digital de responsabilidade pelos docentes e de checklists técnicos parametrizados no momento da devolução.
+O sistema GAC (Gestão de Ativos do CCT) tem como objetivo principal digitalizar e unificar a gestão do inventário. A plataforma substituirá o controle em papel por um fluxo de trabalho ágil e digital, garantindo rastreabilidade em tempo real. Isso será alcançado através da implementação de um aceite digital de responsabilidade pelos docentes e de checklists técnicos parametrizados no momento da devolução.
 
 ---
 
@@ -30,8 +30,8 @@ O mapeamento das partes interessadas envolvidas e afetadas pelo sistema GAC é c
 
 * **Direção Estratégica:** Prof. Jackson (Diretor do CCT).
 * **Gestão Administrativa/Secretaria:** Fabiana (noite) e Marcia (manhã).
-* **Corpo Operacional (Atendentes):** Kildery (Auxiliar Administrativo) e equipa de apoio de 5 auxiliares.
-* **Suporte Técnico:** Equipa do DTEC, responsável pelas manutenções e validação dos checklists de hardware.
+* **Corpo Operacional (Atendentes):** Kildery (Auxiliar Administrativo) e equipe de apoio de 5 auxiliares.
+* **Suporte Técnico:** Equipe do DTEC, responsável pelas manutenções e validação dos checklists de hardware.
 * **Usuários Finais:** Corpo docente (professores) que realiza a locação diária de ativos.
 
 ---
@@ -58,7 +58,7 @@ O mapeamento das partes interessadas envolvidas e afetadas pelo sistema GAC é c
 ## 4.1. Requisitos Funcionais (Issue #5)
 * **RF01:** O sistema deve possuir um cadastro centralizado dos 36 projetores e das chaves/salas do CCT.
 * **RF02:** O sistema deve unificar os processos de retirada e devolução, eliminando formulários independentes.
-* **RF03:** O sistema deve registar acessórios (HDMI, USB) entregues com o projetor.
+* **RF03:** O sistema deve registrar acessórios (HDMI, USB) entregues com o projetor.
 * **RF04:** O sistema deve permitir o preenchimento de um checklist técnico no momento da devolução.
 
 ## 4.2. Requisitos Não Funcionais (Issue #6)
@@ -66,7 +66,7 @@ O mapeamento das partes interessadas envolvidas e afetadas pelo sistema GAC é c
 * **RNF02 (Segurança):** O aceite digital deve possuir a mesma validade institucional que o termo assinado atual.
 
 ## 4.3. Regras de Negócio (Issue #7)
-* **RN01:** O projetor deve ser devolvido obrigatoriamente até ao final do dia.
+* **RN01:** O projetor deve ser devolvido obrigatoriamente até o final do dia.
 * **RN02:** É obrigatório o aceite do Termo de Responsabilidade para autorizar o empréstimo.
 * **RN03:** O sistema deve gerir duas chaves por sala (original e reserva).
 
@@ -83,7 +83,7 @@ O mapeamento das partes interessadas envolvidas e afetadas pelo sistema GAC é c
 | **RF04** | Checklist técnico no momento da devolução | **Média** |
 | **RN01** | Regra de devolução obrigatória até o final do dia | **Média** |
 | **RN03** | Controle de múltiplas chaves (Original e Reserva) | **Média** |
-| **RF03** | Registo de acessórios (Cabo HDMI, USB, etc.) | **Baixa** |
+| **RF03** | Registro de acessórios (Cabo HDMI, USB, etc.) | **Baixa** |
 | **RNF01** | Usabilidade com "Fricção Zero" (Interface rápida) | **Baixa** |
 
 ---
@@ -107,7 +107,7 @@ Detalha o fluxo principal de retirada e devolução do ativo no tempo.
 # 7. Evidências e Anexos
 
 ## Acesso do Professor
-Captura de ecrã comprovando o envio do convite de colaboração para o utilizador `profBezerra` no repositório oficial da equipa.
+Captura de tela comprovando o envio do convite de colaboração para o usuário `profBezerra` no repositório oficial da equipe.
 <img src="images/evidencia_github.jpg" width="600" alt="Evidência de Adição de Colaborador no GitHub"/>
 
 ---
