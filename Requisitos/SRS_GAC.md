@@ -70,8 +70,7 @@ Nesta seção, os requisitos mapeados na Sprint 1 (Elicitação) são detalhados
 ### 3.4 Especificações de Casos de Uso (CDUs)
 O detalhamento das interações entre sistema e atores (Ações, Fluxos Alternativos e Exceções) encontra-se documentado separadamente no formato LAPIS, visando maior granularidade de leitura.
 
-* **[CDU01] Registrar Retirada de Ativo:** Detalha a validação de disponibilidade e assinatura digital. *(Ver arquivo: `cdu_retirada_ativo_gac.md`)*
-* **[CDU02] Devolver Projetor Patrimonial:** Detalha a conferência via checklist técnico e alteração de status. *(Ver arquivo: `cdu_devolucao_projetor_lapis.md`)*
+* **Especificação dos Casos de Uso:** Detalha as validações do sistema, incluindo os fluxos de disponibilidade e assinatura digital para a retirada de ativos. *(Ver arquivo: `Especificação dos Casos de Uso.md`)*
 
 ---
 *Fim do Documento SRS.*
