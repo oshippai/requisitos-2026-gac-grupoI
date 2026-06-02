@@ -59,17 +59,45 @@ Permitir que o atendente realize o processo de empréstimo e retirada de projeto
 
 ---
 
-# 6. Fluxo Principal (Mapeamento da Linha de Tempo)
+# 6. Fluxo Principal
 
-| Passo | Ação do Ator (Atendente) | Ação do Sistema |
-|:---:|---|---|
-| 1 | O atendente inicia o fluxo de retirada de ativo no balcão de atendimento. | O sistema exibe a tela de solicitação de empréstimo, aguardando a identificação do ativo e do professor. |
-| 2 | O atendente realiza a leitura da etiqueta física (QR Code/NFC) do ativo e insere a matrícula do professor solicitante. | O sistema valida a existência e a disponibilidade do ativo no inventário, e checa se o professor possui alguma pendência impeditiva (RN01, RN03). |
-| 3 | | O sistema gera o Termo de Responsabilidade Digital específico para aquela locação e dispara o pedido de assinatura para o dispositivo do professor. |
-| 4 | | O sistema aguarda o aceite eletrônico por parte do professor (RN02). |
-| 5 | O professor lê e confirma o aceite digital do termo em seu dispositivo de interface. | O sistema valida a assinatura digital, registra a transação de empréstimo associando o ID do ativo à matrícula do professor, e altera o status do ativo para "Emprestado". |
-| 6 | | O sistema exibe a mensagem de confirmação de sucesso [MSG01] e libera a entrega física. |
-| 7 | O atendente entrega fisicamente o equipamento (projetor/chave) e os acessórios vinculados ao professor. | O caso de uso é encerrado com sucesso. |
+## P1. Iniciar atendimento
+### P1.1.
+O atendente inicia o fluxo de retirada de ativo no balcão de atendimento.
+### P1.2.
+O sistema exibe a tela de solicitação de empréstimo.
+
+## P2. Identificar ativo e solicitante
+### P2.1.
+O atendente realiza a leitura da etiqueta física (QR Code/NFC) do ativo.
+### P2.2.
+O atendente insere a matrícula do professor solicitante.
+### P2.3.
+O sistema valida a existência e a disponibilidade do ativo no inventário.
+### P2.4.
+O sistema checa se o professor possui alguma pendência impeditiva (RN01, RN03).
+
+## P3. Assinatura do Termo de Responsabilidade
+### P3.1.
+O sistema gera o Termo de Responsabilidade Digital específico para aquela locação.
+### P3.2.
+O sistema dispara o pedido de assinatura para o dispositivo do professor.
+### P3.3.
+O professor lê e confirma o aceite digital do termo em seu dispositivo de interface.
+
+## P4. Confirmar retirada
+### P4.1.
+O sistema valida a assinatura digital e registra a transação de empréstimo.
+### P4.2.
+O sistema altera o status do ativo para "Emprestado".
+### P4.3.
+O sistema exibe a mensagem de confirmação de sucesso [MSG01] e libera a entrega física.
+
+## P5. Finalizar operação
+### P5.1.
+O atendente entrega fisicamente o equipamento (projetor/chave) e os acessórios vinculados ao professor.
+### P5.2.
+O caso de uso é encerrado com sucesso.
 
 ---
 
