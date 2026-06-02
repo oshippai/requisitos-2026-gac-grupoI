@@ -347,7 +347,7 @@ Tela utilizada pelo atendente para identificar o solicitante, bipar o ativo e ge
 |---|---|
 | REF01 | Documento de Visão do GAC (Issues #1 a #7) |
 | REF02 | Diagrama de Casos de Uso (UC04 e UC05) |
-| REF03 | Modelo [[LAPIS de Liderança Ágil](https://github.com/ProfBezerra/LAPIS/) |
+| REF03 | Modelo [LAPIS de Liderança Ágil](https://github.com/ProfBezerra/LAPIS/) |
 
 ---
 
