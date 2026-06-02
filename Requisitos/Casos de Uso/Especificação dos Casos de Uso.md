@@ -1,6 +1,6 @@
 # Especificação de Requisitos Funcionais
 
-## Caso de Uso (CDU) - LAPIS (Adaptado para GAC)
+## Caso de Uso (CDU) - GAC
 
 ---
 
