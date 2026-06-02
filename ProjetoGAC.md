@@ -114,3 +114,15 @@ Captura de tela comprovando o envio do convite de colaboração para o usuário 
 ---
 
 *Documento gerado para a P1 de Requisitos e Modelagem de Sistemas.* *Projeto GAC - Gestão de Ativos do CCT*
+
+---
+
+## 📱 Protótipo Navegável e Wireframes (Issues #15 e #16)
+
+As telas do sistema GAC foram desenhadas e prototipadas utilizando o Figma, focando na usabilidade "Fricção Zero" para o atendente. O fluxo interativo inclui a Tela Inicial, o fluxo de Retirada (com aceite digital), o fluxo de Devolução (com checklist técnico) e a Consulta de Inventário.
+
+*(Clique na imagem abaixo para acessar o protótipo interativo no Figma)*
+
+[![Acessar Protótipo Navegável](images/prototipo_preview.png)](https://www.figma.com/make/GHpF817r5PtCU12GRG7aqF/Prototipagem-GAC?fullscreen=1&t=yI2UNIeCmY9GtW2N-1&code-node-id=0-9)
+
+> 🔗 **Link alternativo:** [Testar o protótipo interativo diretamente no Figma](https://www.figma.com/make/GHpF817r5PtCU12GRG7aqF/Prototipagem-GAC?fullscreen=1&t=yI2UNIeCmY9GtW2N-1&code-node-id=0-9)
