@@ -125,6 +125,18 @@ As telas do sistema GAC foram desenhadas e prototipadas utilizando o Figma, foca
 > 🔗 **Link alternativo:** [Testar o protótipo interativo diretamente no Figma](https://www.figma.com/make/GHpF817r5PtCU12GRG7aqF/Prototipagem-GAC?fullscreen=1&t=yI2UNIeCmY9GtW2N-1&code-node-id=0-9)
 
 ---
+
+## 9. Pitch e Storytelling (Issues #17 e #18)
+
+Para a apresentação final, foi desenvolvida uma narrativa estratégica (storytelling) focada no valor de negócio e na resolução de dores operacionais do CCT. O Pitch Deck detalha desde o problema do controle analógico até a viabilidade técnica e os benefícios da solução GAC.
+
+*(Clique na imagem abaixo para visualizar a apresentação completa)*
+
+[![Acessar Apresentação do Pitch](images/pitch_preview.png)](https://docs.google.com/presentation/d/1VxpBOoDbJC6z3NULnf96EWxmzxjiquWdt3UAQPVJIvU/edit?usp=sharing)
+
+> 🔗 **Link de Acesso:** [Visualizar Pitch Deck (Slides da Apresentação)](https://docs.google.com/presentation/d/1VxpBOoDbJC6z3NULnf96EWxmzxjiquWdt3UAQPVJIvU/edit?usp=sharing)
+
+---
 ---
 
 # 📙 PARTE II: Especificação de Requisitos de Software (SRS)
