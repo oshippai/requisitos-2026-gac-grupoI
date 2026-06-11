@@ -126,7 +126,7 @@ O protótipo principal foi construído em código (React/Tailwind) e hospedado v
 ### 📧 Wireframe: Visão do Professor (Aceite de Termo por E-mail)
 Para simular a interface do usuário final, foi desenvolvido no Figma o fluxo que demonstra como o professor recebe a notificação institucional por e-mail e realiza a assinatura digital do Termo de Responsabilidade no próprio celular/computador.
 
-[![Acessar Wireframe do E-mail](images/prototipo_preview.png)](https://www.figma.com/make/0PyyE6DtRGr04GEfKV4zFR/Email-Client-Wireframe-Design?fullscreen=1&t=pFh94Waz6zJeqBS7-1&code-node-id=0-9)
+[![Acessar Wireframe do E-mail](images/email.png)](https://www.figma.com/make/0PyyE6DtRGr04GEfKV4zFR/Email-Client-Wireframe-Design?fullscreen=1&t=pFh94Waz6zJeqBS7-1&code-node-id=0-9)
 
 > 🔗 **Acessar Visão do Professor no Figma:** [Testar o fluxo do e-mail institucional](https://www.figma.com/make/0PyyE6DtRGr04GEfKV4zFR/Email-Client-Wireframe-Design?fullscreen=1&t=pFh94Waz6zJeqBS7-1&code-node-id=0-9)
 
