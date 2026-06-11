@@ -116,13 +116,19 @@ Captura de tela comprovando o envio do convite de colaboração para o usuário 
 
 ## 8. Protótipo Navegável e Wireframes (Issues #15 e #16)
 
-As telas do sistema GAC foram desenhadas e prototipadas utilizando o Figma, focando na usabilidade "Fricção Zero" para o atendente. O fluxo interativo inclui a Tela Inicial, o fluxo de Retirada (com aceite digital), o fluxo de Devolução (com checklist técnico) e a Consulta de Inventário.
+As telas do sistema GAC foram desenhadas e desenvolvidas focando na usabilidade de "Fricção Zero" para os operadores de balcão e em uma gestão limpa e eficiente para a administração. O projeto conta com um protótipo web de alta fidelidade interativo e wireframes complementares no Figma.
 
-*(Clique na imagem abaixo para acessar o protótipo interativo no Figma)*
+### 💻 Protótipo Interativo Unificado (Painel Administrativo e Atendente)
+O protótipo principal foi construído em código (React/Tailwind) e hospedado via GitHub Pages para facilitar o teste de usabilidade em tempo real. Ele simula tanto o login do Atendente (Retirada, Devolução e Consulta) quanto o login do Administrador (Gestão de Ativos e Equipe).
 
-[![Acessar Protótipo Navegável](images/prototipo_preview.png)](https://www.figma.com/make/GHpF817r5PtCU12GRG7aqF/Prototipagem-GAC?fullscreen=1&t=yI2UNIeCmY9GtW2N-1&code-node-id=0-9)
+> 🔗 **Acessar Protótipo Web:** [https://oshippai.github.io/requisitos-2026-gac-grupoI/](https://oshippai.github.io/requisitos-2026-gac-grupoI/)
 
-> 🔗 **Link alternativo:** [Testar o protótipo interativo diretamente no Figma](https://www.figma.com/make/GHpF817r5PtCU12GRG7aqF/Prototipagem-GAC?fullscreen=1&t=yI2UNIeCmY9GtW2N-1&code-node-id=0-9)
+### 📧 Wireframe: Visão do Professor (Aceite de Termo por E-mail)
+Para simular a interface do usuário final, foi desenvolvido no Figma o fluxo que demonstra como o professor recebe a notificação institucional por e-mail e realiza a assinatura digital do Termo de Responsabilidade no próprio celular/computador.
+
+[![Acessar Wireframe do E-mail](images/prototipo_preview.png)](https://www.figma.com/make/0PyyE6DtRGr04GEfKV4zFR/Email-Client-Wireframe-Design?fullscreen=1&t=pFh94Waz6zJeqBS7-1&code-node-id=0-9)
+
+> 🔗 **Acessar Visão do Professor no Figma:** [Testar o fluxo do e-mail institucional](https://www.figma.com/make/0PyyE6DtRGr04GEfKV4zFR/Email-Client-Wireframe-Design?fullscreen=1&t=pFh94Waz6zJeqBS7-1&code-node-id=0-9)
 
 ---
 
