@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sistema GAC — Protótipo Unificado</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.development.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.development.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  * { box-sizing: border-box; font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+  body { margin: 0; background-color: #f8fafc; color: #0f172a; }
+  .fade-in { animation: fadeIn 0.3s ease-out; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const faMap = {
+  Eye: "fa-regular fa-eye", EyeOff: "fa-regular fa-eye-slash", Lock: "fa-solid fa-lock",
+  User: "fa-regular fa-user", Package: "fa-solid fa-box", RotateCcw: "fa-solid fa-rotate-left",
+  Search: "fa-solid fa-magnifying-glass", ArrowLeft: "fa-solid fa-arrow-left", QrCode: "fa-solid fa-qrcode",
+  LayoutDashboard: "fa-solid fa-table-columns", Users: "fa-solid fa-users", GraduationCap: "fa-solid fa-graduation-cap",
+  Bell: "fa-regular fa-bell", ChevronRight: "fa-solid fa-chevron-right", Filter: "fa-solid fa-filter",
+  Pencil: "fa-solid fa-pen", Trash2: "fa-solid fa-trash", Plus: "fa-solid fa-plus",
+  ShieldCheck: "fa-solid fa-shield-halved", UserPlus: "fa-solid fa-user-plus", Save: "fa-solid fa-floppy-disk",
+  Hash: "fa-solid fa-hashtag", Tag: "fa-solid fa-tag", Cpu: "fa-solid fa-microchip",
+  CheckCircle: "fa-regular fa-circle-check", LogOut: "fa-solid fa-arrow-right-from-bracket",
+  Ban: "fa-solid fa-ban"
+};
+
+const IconWrapper = ({ icon, size = 16, className = "" }) => (
+  <i className={`${faMap[icon]} ${className} flex items-center justify-center`} style={{ fontSize: size }}></i>
+);
+
+const Eye = (p) => <IconWrapper icon="Eye" {...p} />;
+const EyeOff = (p) => <IconWrapper icon="EyeOff" {...p} />;
+const Lock = (p) => <IconWrapper icon="Lock" {...p} />;
+const User = (p) => <IconWrapper icon="User" {...p} />;
+const Package = (p) => <IconWrapper icon="Package" {...p} />;
+const RotateCcw = (p) => <IconWrapper icon="RotateCcw" {...p} />;
+const Search = (p) => <IconWrapper icon="Search" {...p} />;
+const ArrowLeft = (p) => <IconWrapper icon="ArrowLeft" {...p} />;
+const QrCode = (p) => <IconWrapper icon="QrCode" {...p} />;
+const LayoutDashboard = (p) => <IconWrapper icon="LayoutDashboard" {...p} />;
+const Users = (p) => <IconWrapper icon="Users" {...p} />;
+const GraduationCap = (p) => <IconWrapper icon="GraduationCap" {...p} />;
+const Bell = (p) => <IconWrapper icon="Bell" {...p} />;
+const ChevronRight = (p) => <IconWrapper icon="ChevronRight" {...p} />;
+const Filter = (p) => <IconWrapper icon="Filter" {...p} />;
+const Plus = (p) => <IconWrapper icon="Plus" {...p} />;
+const ShieldCheck = (p) => <IconWrapper icon="ShieldCheck" {...p} />;
+const Save = (p) => <IconWrapper icon="Save" {...p} />;
+const Hash = (p) => <IconWrapper icon="Hash" {...p} />;
+const Tag = (p) => <IconWrapper icon="Tag" {...p} />;
+const Cpu = (p) => <IconWrapper icon="Cpu" {...p} />;
+const CheckCircle = (p) => <IconWrapper icon="CheckCircle" {...p} />;
+const LogOut = (p) => <IconWrapper icon="LogOut" {...p} />;
+const Ban = (p) => <IconWrapper icon="Ban" {...p} />;
+
+const mockAtivos = [
+  { id: 1, patrimonio: "PAT-2024-00101", modelo: "Dell OptiPlex 7090",    tipo: "Computador", status: "Em Uso" },
+  { id: 2, patrimonio: "PAT-2024-00102", modelo: "HP LaserJet Pro M404n", tipo: "Impressora", status: "Disponível" },
+  { id: 3, patrimonio: "PAT-2024-00103", modelo: "LG 24MK430H",            tipo: "Monitor",    status: "Disponível" },
+  { id: 4, patrimonio: "PAT-2024-00104", modelo: "Epson PowerLite W52+",  tipo: "Projetor",   status: "Manutenção" },
+  { id: 5, patrimonio: "PAT-2024-00105", modelo: "Lenovo ThinkPad E14",   tipo: "Notebook",   status: "Em Uso" },
+  { id: 6, patrimonio: "PAT-2024-00106", modelo: "Samsung Galaxy Tab A8", tipo: "Tablet",     status: "Disponível" },
+  { id: 7, patrimonio: "PAT-2024-00107", modelo: "Dell PowerEdge R240",   tipo: "Servidor",   status: "Em Uso" },
+  { id: 8, patrimonio: "PAT-2023-00088", modelo: "HP Compaq 8200 Elite",  tipo: "Computador", status: "Baixado" },
+];
+const mockAtendentes = [
+  { id: 1, nome: "Kildery Alves",       matricula: "ATD-2024-001", turno: "Manhã",    status: "Aprovado" },
+  { id: 2, nome: "Carlos Eduardo Lima", matricula: "ATD-2024-002", turno: "Tarde",    status: "Aprovado" },
+  { id: 3, nome: "Fernanda Costa",      matricula: "ATD-2024-003", turno: "Noite",    status: "Pendente" },
+  { id: 4, nome: "Marcos Antônio Reis", matricula: "ATD-2023-018", turno: "Manhã",    status: "Aprovado" },
+  { id: 5, nome: "Juliana Ferreira",    matricula: "ATD-2024-004", turno: "Integral", status: "Pendente" },
+  { id: 6, nome: "Roberto Alves",       matricula: "ATD-2023-021", turno: "Tarde",    status: "Suspenso" },
+  { id: 7, nome: "Maria Silva",         matricula: "ATD-2024-005", turno: "Manhã",    status: "Aprovado" },
+];
+const equipamentos = [
+  { id: "1", nome: "Projetor Epson EB-X41",   status: "Disponível" },
+  { id: "2", nome: "Projetor BenQ MS550",      status: "Emprestado" },
+  { id: "3", nome: "Projetor Sony VPL-DX221",  status: "Disponível" },
+  { id: "4", nome: "Chave Sala 101",           status: "Emprestado" },
+  { id: "5", nome: "Chave Sala 102",           status: "Disponível" },
+  { id: "6", nome: "Chave Sala 103",           status: "Disponível" },
+  { id: "7", nome: "Projetor LG PF50KS",       status: "Disponível" },
+  { id: "8", nome: "Chave Auditório",          status: "Emprestado" },
+];
+
+function CadastrarAtivo() {
+  const [form, setForm] = React.useState({ patrimonio: "", tipo: "", modelo: "" });
+  const [saved, setSaved] = React.useState(false);
+  const tiposAtivo = ["Computador","Monitor","Impressora","Projetor","Notebook","Tablet","Servidor","Chave","Outro"];
+  
+  function handleSave(e) {
+    e.preventDefault();
+    setSaved(true);
+    setTimeout(() => { setSaved(false); setForm({ patrimonio: "", tipo: "", modelo: "" }); }, 2500);
+  }
+
+  return (
+    <div className="max-w-xl fade-in">
+      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+        <div className="px-7 py-5 border-b border-slate-100 bg-slate-50">
+          <h2 className="text-slate-800 text-base font-semibold">Cadastrar Novo Ativo</h2>
+          <p className="text-slate-500 text-xs mt-1">Insira os dados do equipamento no inventário</p>
+        </div>
+        <form onSubmit={handleSave} className="px-7 py-6 flex flex-col gap-5">
+          <div className="flex flex-col gap-2">
+            <label className="text-slate-700 text-xs font-semibold uppercase tracking-wider">Número Patrimonial</label>
+            <div className="flex items-center gap-3 border border-slate-200 rounded-lg px-4 py-2.5 bg-slate-50 focus-within:border-blue-500 focus-within:bg-white transition-colors">
+              <Hash size={16} className="text-slate-400 shrink-0"/>
+              <input type="text" placeholder="Ex: PAT-2024-00123" value={form.patrimonio} onChange={e=>setForm({...form,patrimonio:e.target.value})} required className="flex-1 bg-transparent outline-none text-slate-800 placeholder-slate-400 text-sm"/>
+            </div>
+          </div>
+          <div className="flex flex-col gap-2">
+            <label className="text-slate-700 text-xs font-semibold uppercase tracking-wider">Tipo do Ativo</label>
+            <div className="flex items-center gap-3 border border-slate-200 rounded-lg px-4 py-2.5 bg-slate-50 focus-within:border-blue-500 focus-within:bg-white transition-colors">
+              <Tag size={16} className="text-slate-400 shrink-0"/>
+              <select value={form.tipo} onChange={e=>setForm({...form,tipo:e.target.value})} required className="flex-1 bg-transparent outline-none text-slate-800 text-sm appearance-none">
+                <option value="" disabled>Selecione o tipo...</option>
+                {tiposAtivo.map(t=><option key={t} value={t}>{t}</option>)}
+              </select>
+            </div>
+          </div>
+          <div className="flex flex-col gap-2">
+            <label className="text-slate-700 text-xs font-semibold uppercase tracking-wider">Modelo / Referência</label>
+            <div className="flex items-center gap-3 border border-slate-200 rounded-lg px-4 py-2.5 bg-slate-50 focus-within:border-blue-500 focus-within:bg-white transition-colors">
+              <Cpu size={16} className="text-slate-400 shrink-0"/>
+              <input type="text" placeholder="Ex: Epson PowerLite W52+" value={form.modelo} onChange={e=>setForm({...form,modelo:e.target.value})} required className="flex-1 bg-transparent outline-none text-slate-800 placeholder-slate-400 text-sm"/>
+            </div>
+          </div>
+          <div className="pt-4">
+            <button type="submit" className={`w-full flex items-center justify-center gap-2.5 py-3 rounded-lg transition-all text-white text-sm font-semibold ${saved ? 'bg-green-600' : 'bg-blue-600 hover:bg-blue-700'}`}>
+              {saved ? <><CheckCircle size={16}/>Salvo com Sucesso!</> : <><Save size={16}/>Salvar Cadastro</>}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+function Inventario() {
+  const [ativos] = React.useState(mockAtivos);
+  const [filterStatus, setFilterStatus] = React.useState("Todos");
+  
+  const statusStyle = {
+    "Disponível": { bg:"bg-green-50 text-green-700 border-green-200", dot:"bg-green-500" },
+    "Em Uso":     { bg:"bg-blue-50 text-blue-700 border-blue-200", dot:"bg-blue-500" },
+    "Manutenção": { bg:"bg-amber-50 text-amber-700 border-amber-200", dot:"bg-amber-500" },
+    "Baixado":    { bg:"bg-red-50 text-red-700 border-red-200", dot:"bg-red-500" },
+  };
+  
+  const filtered = filterStatus==="Todos" ? ativos : ativos.filter(a=>a.status===filterStatus);
+  const counts = { total:ativos.length, disponivel:ativos.filter(a=>a.status==="Disponível").length, emUso:ativos.filter(a=>a.status==="Em Uso").length, manutencao:ativos.filter(a=>a.status==="Manutenção").length };
+  
+  return (
+    <div className="flex flex-col gap-6 fade-in">
+      <div className="grid grid-cols-4 gap-4">
+        {[{label:"Total de Ativos",value:counts.total, color:"text-slate-800"},
+          {label:"Disponíveis",value:counts.disponivel, color:"text-green-600"},
+          {label:"Em Uso",value:counts.emUso, color:"text-blue-600"},
+          {label:"Em Manutenção",value:counts.manutencao, color:"text-amber-600"}].map(c=>(
+          <div key={c.label} className="bg-white rounded-xl border border-slate-200 px-6 py-5 shadow-sm">
+            <p className="text-slate-500 text-xs font-semibold uppercase tracking-wider">{c.label}</p>
+            <p className={`text-3xl font-bold mt-2 ${c.color}`}>{c.value}</p>
+          </div>
+        ))}
+      </div>
+      
+      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+          <h2 className="text-slate-800 text-sm font-semibold">Lista de Equipamentos</h2>
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 border border-slate-200 rounded-lg px-3 py-2 bg-white">
+              <Filter size={14} className="text-slate-400"/>
+              <select value={filterStatus} onChange={e=>setFilterStatus(e.target.value)} className="outline-none bg-transparent text-slate-700 text-xs font-medium">
+                {["Todos","Disponível","Em Uso","Manutenção","Baixado"].map(s=><option key={s}>{s}</option>)}
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="border-b border-slate-200 bg-white">
+                {["Patrimônio","Tipo","Modelo","Status"].map(col=>(
+                  <th key={col} className="px-6 py-4 text-slate-500 text-xs font-semibold uppercase tracking-wider">{col}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {filtered.map((a)=>{
+                const s=statusStyle[a.status];
+                return(
+                <tr key={a.id} className="hover:bg-slate-50 transition-colors bg-white">
+                  <td className="px-6 py-4 text-sm font-mono font-medium text-slate-800">{a.patrimonio}</td>
+                  <td className="px-6 py-4 text-sm text-slate-600">{a.tipo}</td>
+                  <td className="px-6 py-4 text-sm text-slate-800 font-medium">{a.modelo}</td>
+                  <td className="px-6 py-4">
+                    <span className={`inline-flex items-center gap-1.5 px-3 py-1 border rounded-full text-xs font-semibold ${s.bg}`}>
+                      <span className={`w-1.5 h-1.5 rounded-full ${s.dot}`}/>{a.status}
+                    </span>
+                  </td>
+                </tr>
+              )})}
+            </tbody>
+          </table>
+          {filtered.length===0&&<div className="py-12 text-center text-slate-500 text-sm">Nenhum ativo encontrado.</div>}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ControleAtendentes() {
+  const [atendentes, setAtendentes] = React.useState(mockAtendentes);
+  const [search, setSearch] = React.useState("");
+  
+  const turnoColor = { "Manhã":"text-blue-700 bg-blue-50 border-blue-200","Tarde":"text-purple-700 bg-purple-50 border-purple-200","Noite":"text-slate-700 bg-slate-100 border-slate-200","Integral":"text-amber-700 bg-amber-50 border-amber-200" };
+  const filtered = search.trim() ? atendentes.filter(a=>a.nome.toLowerCase().includes(search.toLowerCase())||a.matricula.toLowerCase().includes(search.toLowerCase())) : atendentes;
+  const counts = { total:atendentes.length, aprovados:atendentes.filter(a=>a.status==="Aprovado").length, pendentes:atendentes.filter(a=>a.status==="Pendente").length };
+  
+  const handleAcao = (id, currentStatus) => {
+    const novoStatus = currentStatus === "Aprovado" ? "Suspenso" : "Aprovado";
+    setAtendentes(p => p.map(a => a.id === id ? { ...a, status: novoStatus } : a));
+  };
+
+  return (
+    <div className="flex flex-col gap-6 fade-in">
+      <div className="grid grid-cols-3 gap-4">
+        {[{label:"Total de Atendentes",value:counts.total,color:"text-slate-800"},{label:"Acessos Aprovados",value:counts.aprovados,color:"text-green-600"},{label:"Aguardando Aprovação",value:counts.pendentes,color:"text-amber-600"}].map(c=>(
+          <div key={c.label} className="bg-white rounded-xl border border-slate-200 px-6 py-5 shadow-sm">
+            <p className="text-slate-500 text-xs font-semibold uppercase tracking-wider">{c.label}</p>
+            <p className={`text-3xl font-bold mt-2 ${c.color}`}>{c.value}</p>
+          </div>
+        ))}
+      </div>
+      
+      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+          <h2 className="text-slate-800 text-sm font-semibold">Equipe Operacional</h2>
+          <div className="flex gap-3">
+            <div className="flex items-center gap-2 border border-slate-200 rounded-lg px-3 py-2 bg-white">
+              <Search size={14} className="text-slate-400"/>
+              <input placeholder="Buscar atendente..." value={search} onChange={e=>setSearch(e.target.value)} className="outline-none bg-transparent text-slate-700 placeholder-slate-400 text-xs w-48 font-medium"/>
+            </div>
+          </div>
+        </div>
+        
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="border-b border-slate-200 bg-white">
+                {["Nome do Atendente","Matrícula","Turno","Status","Ação de Acesso"].map(col=><th key={col} className="px-6 py-4 text-slate-500 text-xs font-semibold uppercase tracking-wider">{col}</th>)}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {filtered.map((a)=>{
+                const isAprovado=a.status==="Aprovado", isSuspenso=a.status==="Suspenso";
+                return(
+                <tr key={a.id} className="hover:bg-slate-50 transition-colors bg-white">
+                  <td className="px-6 py-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-9 h-9 rounded-full bg-blue-100 border border-blue-200 flex items-center justify-center shrink-0">
+                        <span className="text-blue-700 text-xs font-bold">{a.nome.split(" ").slice(0,2).map(n=>n[0]).join("")}</span>
+                      </div>
+                      <span className="text-slate-800 text-sm font-semibold">{a.nome}</span>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 text-sm text-slate-500 font-mono">{a.matricula}</td>
+                  <td className="px-6 py-4"><span className={`inline-flex px-3 py-1 border rounded-full text-xs font-semibold ${turnoColor[a.turno]||"text-slate-700 bg-slate-100"}`}>{a.turno}</span></td>
+                  <td className="px-6 py-4">
+                    {isAprovado?<span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-green-50 border border-green-200 text-green-700 text-xs font-semibold"><span className="w-1.5 h-1.5 rounded-full bg-green-500"/>Aprovado</span>
+                    :isSuspenso?<span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-50 border border-red-200 text-red-700 text-xs font-semibold"><span className="w-1.5 h-1.5 rounded-full bg-red-500"/>Suspenso</span>
+                    :<span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-700 text-xs font-semibold"><span className="w-1.5 h-1.5 rounded-full bg-amber-500"/>Pendente</span>}
+                  </td>
+                  <td className="px-6 py-4">
+                    {isAprovado
+                      ? <button onClick={()=>handleAcao(a.id, a.status)} className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold bg-red-50 text-red-600 hover:bg-red-100 border border-red-200 transition-colors"><Ban size={14}/> Suspender Acesso</button>
+                      : <button onClick={()=>handleAcao(a.id, a.status)} className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold bg-green-600 hover:bg-green-700 text-white transition-colors"><ShieldCheck size={14}/> Aprovar Acesso</button>
+                    }
+                  </td>
+                </tr>);
+            })}</tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PainelAdmin({ onLogout }) {
+  const [activeTab, setActiveTab] = React.useState("ativos");
+  const navItems = [
+    { id:"ativos",     label:"Cadastrar Ativo",  icon:<Plus size={16}/> },
+    { id:"inventario", label:"Inventário",       icon:<LayoutDashboard size={16}/> },
+    { id:"equipe",     label:"Equipe",           icon:<Users size={16}/> },
+  ];
+  
+  return (
+    <div className="flex h-screen bg-slate-50 overflow-hidden fade-in">
+      <aside className="w-64 bg-slate-900 flex flex-col shrink-0 text-slate-300">
+        <div className="flex items-center gap-3 px-6 py-6 border-b border-slate-800">
+          <div className="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center shrink-0">
+            <GraduationCap size={24} className="text-white"/>
+          </div>
+          <div>
+            <p className="text-white text-sm font-bold tracking-wide">GAC CCT</p>
+            <p className="text-slate-400 text-xs font-medium">Administração</p>
+          </div>
+        </div>
+        <nav className="flex-1 px-4 py-6 flex flex-col gap-2">
+          <p className="text-slate-500 px-3 mb-2 text-xs font-bold uppercase tracking-widest">Menu</p>
+          {navItems.map(item=>{
+            const isActive=activeTab===item.id;
+            return(
+            <button key={item.id} onClick={()=>setActiveTab(item.id)} className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left text-sm font-semibold ${isActive?"bg-blue-600 text-white":"text-slate-400 hover:bg-slate-800 hover:text-white"}`}>
+              <span className={isActive?"text-white":"text-slate-500"}>{item.icon}</span>
+              {item.label}
+            </button>);
+          })}
+        </nav>
+        <div className="px-6 py-6 border-t border-slate-800 flex flex-col gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center shrink-0"><span className="text-white text-sm font-bold">AD</span></div>
+            <div className="min-w-0"><p className="text-white text-sm font-semibold truncate">Direção CCT</p><p className="text-slate-500 text-xs truncate">admin@unifor.br</p></div>
+          </div>
+          <button onClick={onLogout} className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-slate-700 text-slate-400 hover:bg-slate-800 hover:text-white transition-all text-sm font-semibold"><LogOut size={16}/>Sair do Sistema</button>
+        </div>
+      </aside>
+      
+      <div className="flex-1 flex flex-col overflow-auto">
+        <header className="bg-white border-b border-slate-200 px-10 py-5 flex items-center justify-between shrink-0">
+          <div>
+            <h1 className="text-slate-800 text-xl font-bold">{navItems.find(n=>n.id===activeTab)?.label}</h1>
+          </div>
+        </header>
+        <main className="flex-1 p-10 max-w-7xl mx-auto w-full">
+          {activeTab==="ativos"&&<CadastrarAtivo/>}
+          {activeTab==="inventario"&&<Inventario/>}
+          {activeTab==="equipe"&&<ControleAtendentes/>}
+        </main>
+      </div>
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/* PAINEL DO ATENDENTE (Componentes Filhos)                                   */
+/* -------------------------------------------------------------------------- */
+
+function AtendenteHome({ onNavigate }) {
+  return (
+    <div className="min-h-screen bg-slate-50 fade-in">
+      <header className="bg-white border-b border-slate-200 px-8 py-5">
+        <div className="max-w-5xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-4">
+             <div className="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center">
+                <GraduationCap size={24} className="text-white"/>
+             </div>
+             <div>
+               <h1 className="text-lg font-bold text-slate-800">Sistema GAC</h1>
+               <p className="text-sm font-medium text-slate-500">Operador: Maria Silva (Balcão J02)</p>
+             </div>
+          </div>
+          <button onClick={()=>onNavigate("logout")} className="flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-100 hover:text-slate-900 text-sm font-semibold transition-colors"><LogOut size={16}/>Encerrar Turno</button>
+        </div>
+      </header>
+      <main className="max-w-5xl mx-auto px-8 py-16">
+        <h2 className="text-2xl font-bold text-slate-800 mb-8">Ações Rápidas no Balcão</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <button onClick={()=>onNavigate("retirada")} className="bg-white p-10 rounded-2xl border border-slate-200 hover:border-blue-500 hover:shadow-md transition-all flex flex-col items-center justify-center text-center group cursor-pointer">
+            <div className="w-20 h-20 bg-blue-50 border border-blue-100 rounded-full flex items-center justify-center mb-6 group-hover:bg-blue-600 transition-colors"><Package size={36} className="text-blue-600 group-hover:text-white transition-colors"/></div>
+            <h3 className="text-lg font-bold text-slate-800 mb-2 group-hover:text-blue-600 transition-colors">Registrar Retirada</h3>
+            <p className="text-sm text-slate-500 font-medium">Bipar equipamento e gerar termo</p>
+          </button>
+          <button onClick={()=>onNavigate("devolucao")} className="bg-white p-10 rounded-2xl border border-slate-200 hover:border-green-500 hover:shadow-md transition-all flex flex-col items-center justify-center text-center group cursor-pointer">
+            <div className="w-20 h-20 bg-green-50 border border-green-100 rounded-full flex items-center justify-center mb-6 group-hover:bg-green-600 transition-colors"><RotateCcw size={36} className="text-green-600 group-hover:text-white transition-colors"/></div>
+            <h3 className="text-lg font-bold text-slate-800 mb-2 group-hover:text-green-600 transition-colors">Registrar Devolução</h3>
+            <p className="text-sm text-slate-500 font-medium">Preencher checklist técnico</p>
+          </button>
+          <button onClick={()=>onNavigate("consulta")} className="bg-white p-10 rounded-2xl border border-slate-200 hover:border-purple-500 hover:shadow-md transition-all flex flex-col items-center justify-center text-center group cursor-pointer">
+            <div className="w-20 h-20 bg-purple-50 border border-purple-100 rounded-full flex items-center justify-center mb-6 group-hover:bg-purple-600 transition-colors"><Search size={36} className="text-purple-600 group-hover:text-white transition-colors"/></div>
+            <h3 className="text-lg font-bold text-slate-800 mb-2 group-hover:text-purple-600 transition-colors">Consultar Inventário</h3>
+            <p className="text-sm text-slate-500 font-medium">Busca rápida de disponibilidade</p>
+          </button>
+        </div>
+      </main>
+    </div>
+  );
+}
+
+function AtendenteRetirada({ onBack }) {
+  const [matricula, setMatricula] = React.useState("");
+  const [acessorios, setAcessorios] = React.useState({ caboHDMI:false, controleRemoto:false });
+  return (
+    <div className="min-h-screen bg-slate-50 fade-in">
+      <header className="bg-white border-b border-slate-200 px-8 py-5">
+        <div className="max-w-3xl mx-auto flex items-center gap-5">
+          <button onClick={onBack} className="p-2 rounded-lg border border-slate-200 text-slate-500 hover:bg-slate-100 transition-colors"><ArrowLeft size={18}/></button>
+          <div><h1 className="text-xl font-bold text-slate-800">Nova Retirada de Ativo</h1><p className="text-sm font-medium text-slate-500">Preencha os dados e gere o termo jurídico</p></div>
+        </div>
+      </header>
+      <main className="max-w-3xl mx-auto px-8 py-10">
+        <div className="bg-white rounded-2xl border border-slate-200 p-8 space-y-8 shadow-sm">
+          <div>
+            <label className="block text-sm font-bold text-slate-700 mb-2">Matrícula ou CPF do Professor</label>
+            <div className="flex items-center gap-3 border border-slate-300 rounded-xl px-4 py-3 bg-slate-50 focus-within:border-blue-500 focus-within:bg-white transition-colors">
+               <User size={18} className="text-slate-400"/>
+               <input type="text" value={matricula} onChange={e=>setMatricula(e.target.value)} placeholder="Bipe o crachá ou digite a matrícula" className="w-full bg-transparent outline-none text-slate-800 font-medium"/>
+            </div>
+          </div>
+          <div>
+            <label className="block text-sm font-bold text-slate-700 mb-2">Identificação do Equipamento</label>
+            <div className="bg-slate-50 border-2 border-dashed border-slate-300 rounded-xl p-12 flex flex-col items-center justify-center hover:bg-slate-100 hover:border-blue-400 transition-colors cursor-pointer">
+              <QrCode size={64} className="text-slate-400 mb-4"/>
+              <p className="text-sm font-semibold text-slate-600 text-center">Utilize o leitor para bipar o QR Code do equipamento</p>
+              <p className="text-xs text-slate-400 mt-2">Ou clique aqui para digitação manual</p>
+            </div>
+          </div>
+          <div>
+            <label className="block text-sm font-bold text-slate-700 mb-3">Acessórios Entregues (Opcional)</label>
+            <div className="flex flex-col gap-3">
+              <label className="flex items-center gap-3 p-3 border border-slate-200 rounded-lg hover:bg-slate-50 cursor-pointer transition-colors">
+                <input type="checkbox" checked={acessorios.caboHDMI} onChange={e=>setAcessorios({...acessorios,caboHDMI:e.target.checked})} className="w-5 h-5 accent-blue-600"/>
+                <span className="text-sm font-semibold text-slate-700">Cabo HDMI</span>
+              </label>
+              <label className="flex items-center gap-3 p-3 border border-slate-200 rounded-lg hover:bg-slate-50 cursor-pointer transition-colors">
+                <input type="checkbox" checked={acessorios.controleRemoto} onChange={e=>setAcessorios({...acessorios,controleRemoto:e.target.checked})} className="w-5 h-5 accent-blue-600"/>
+                <span className="text-sm font-semibold text-slate-700">Controle Remoto Padrão</span>
+              </label>
+            </div>
+          </div>
+          <div className="pt-4 border-t border-slate-100">
+            <button onClick={()=>alert("Notificação enviada! Aguardando o professor assinar no celular.")} className="w-full bg-blue-600 text-white py-4 rounded-xl font-bold text-base hover:bg-blue-700 shadow-sm transition-colors flex justify-center items-center gap-2">
+              <Bell size={18}/> Enviar Termo de Responsabilidade
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}
+
+function AtendenteDevolucao({ onBack }) {
+  const [checklist, setChecklist] = React.useState({ funcionando:false, semDanos:false, acessoriosCompletos:false });
+  const [observacoes, setObservacoes] = React.useState("");
+  const isCompleto = checklist.funcionando&&checklist.semDanos&&checklist.acessoriosCompletos;
+  
+  return (
+    <div className="min-h-screen bg-slate-50 fade-in">
+      <header className="bg-white border-b border-slate-200 px-8 py-5">
+        <div className="max-w-3xl mx-auto flex items-center gap-5">
+          <button onClick={onBack} className="p-2 rounded-lg border border-slate-200 text-slate-500 hover:bg-slate-100 transition-colors"><ArrowLeft size={18}/></button>
+          <div><h1 className="text-xl font-bold text-slate-800">Registrar Devolução</h1><p className="text-sm font-medium text-slate-500">Conferência técnica de retorno de equipamento</p></div>
+        </div>
+      </header>
+      <main className="max-w-3xl mx-auto px-8 py-10">
+        <div className="bg-white rounded-2xl border border-slate-200 p-8 space-y-8 shadow-sm">
+          <div>
+            <label className="block text-sm font-bold text-slate-700 mb-2">Equipamento Retornado</label>
+            <div className="bg-slate-50 border-2 border-dashed border-slate-300 rounded-xl p-8 flex flex-col items-center justify-center hover:bg-slate-100 transition-colors cursor-pointer">
+              <QrCode size={48} className="text-slate-400 mb-3"/>
+              <p className="text-sm font-semibold text-slate-600 text-center">Bipe o QR Code do equipamento que o professor entregou</p>
+            </div>
+          </div>
+          <div>
+            <div className="flex items-center justify-between mb-4 border-b border-slate-100 pb-2">
+              <label className="text-base font-bold text-slate-800">Checklist Técnico</label>
+              <span className="text-xs font-bold uppercase tracking-wider text-red-500 bg-red-50 px-2 py-1 rounded">Obrigatório</span>
+            </div>
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 space-y-4">
+              <label className="flex items-center gap-3 cursor-pointer">
+                <input type="checkbox" checked={checklist.funcionando} onChange={e=>setChecklist({...checklist,funcionando:e.target.checked})} className="w-5 h-5 accent-green-600"/>
+                <span className="text-sm font-semibold text-slate-800">Equipamento testado e funcionando</span>
+              </label>
+              <label className="flex items-center gap-3 cursor-pointer">
+                <input type="checkbox" checked={checklist.semDanos} onChange={e=>setChecklist({...checklist,semDanos:e.target.checked})} className="w-5 h-5 accent-green-600"/>
+                <span className="text-sm font-semibold text-slate-800">Sem danos físicos aparentes (riscos graves/quebras)</span>
+              </label>
+              <label className="flex items-center gap-3 cursor-pointer">
+                <input type="checkbox" checked={checklist.acessoriosCompletos} onChange={e=>setChecklist({...checklist,acessoriosCompletos:e.target.checked})} className="w-5 h-5 accent-green-600"/>
+                <span className="text-sm font-semibold text-slate-800">Todos os acessórios do termo original foram devolvidos</span>
+              </label>
+            </div>
+          </div>
+          <div>
+            <label className="block text-sm font-bold text-slate-700 mb-2">Observações e Avarias <span className="text-slate-400 font-normal">(Opcional)</span></label>
+            <textarea value={observacoes} onChange={e=>setObservacoes(e.target.value)} rows={3} placeholder="Descreva problemas técnicos, arranhões ou itens perdidos pelo usuário..." className="w-full border border-slate-300 rounded-xl px-4 py-3 text-sm text-slate-800 font-medium placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"/>
+          </div>
+          <div className="pt-4 border-t border-slate-100">
+            <button onClick={()=>{if(!isCompleto){alert("Conclua o checklist obrigatório.");return;}alert("Devolução confirmada com sucesso!");}} disabled={!isCompleto} className={`w-full py-4 rounded-xl font-bold text-base transition-colors flex justify-center items-center gap-2 ${isCompleto?"bg-green-600 text-white hover:bg-green-700 shadow-sm":"bg-slate-100 text-slate-400 cursor-not-allowed"}`}>
+              <CheckCircle size={18}/> Finalizar Devolução
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}
+
+function AtendenteConsulta({ onBack }) {
+  const [busca, setBusca] = React.useState("");
+  const filtrados = equipamentos.filter(eq=>eq.nome.toLowerCase().includes(busca.toLowerCase()));
+  return (
+    <div className="min-h-screen bg-slate-50 fade-in">
+      <header className="bg-white border-b border-slate-200 px-8 py-5">
+        <div className="max-w-4xl mx-auto flex items-center gap-5">
+          <button onClick={onBack} className="p-2 rounded-lg border border-slate-200 text-slate-500 hover:bg-slate-100 transition-colors"><ArrowLeft size={18}/></button>
+          <div><h1 className="text-xl font-bold text-slate-800">Consultar Inventário</h1><p className="text-sm font-medium text-slate-500">Busca ao vivo de projetores e chaves</p></div>
+        </div>
+      </header>
+      <main className="max-w-4xl mx-auto px-8 py-10">
+        <div className="mb-8 flex items-center gap-3 border-2 border-slate-200 rounded-xl px-4 py-3.5 bg-white focus-within:border-blue-500 transition-colors shadow-sm">
+          <Search size={18} className="text-slate-400"/>
+          <input type="text" value={busca} onChange={e=>setBusca(e.target.value)} placeholder="Digite o nome, sala ou patrimônio..." className="w-full bg-transparent border-none outline-none text-slate-800 font-semibold placeholder-slate-400"/>
+        </div>
+        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+          <table className="w-full text-left">
+            <thead className="bg-slate-50 border-b border-slate-200">
+              <tr>
+                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Equipamento</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Status Atual</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {filtrados.map(eq=>(
+                <tr key={eq.id} className="hover:bg-slate-50 transition-colors">
+                  <td className="px-6 py-5 text-sm font-bold text-slate-800">{eq.nome}</td>
+                  <td className="px-6 py-5">
+                    {eq.status==="Disponível"
+                      ?<span className="inline-flex items-center gap-1.5 px-3 py-1 border border-green-200 rounded-full text-xs font-bold bg-green-50 text-green-700"><span className="w-1.5 h-1.5 rounded-full bg-green-500"/>Disponível no Balcão</span>
+                      :<span className="inline-flex items-center gap-1.5 px-3 py-1 border border-red-200 rounded-full text-xs font-bold bg-red-50 text-red-700"><span className="w-1.5 h-1.5 rounded-full bg-red-500"/>Emprestado</span>}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {filtrados.length===0&&<div className="py-16 text-center text-slate-500 font-medium">Nenhum equipamento corresponde à busca.</div>}
+        </div>
+      </main>
+    </div>
+  );
+}
+
+function PainelAtendente({ onLogout }) {
+  const [view, setView] = React.useState("home");
+  if(view==="retirada") return <AtendenteRetirada onBack={()=>setView("home")}/>;
+  if(view==="devolucao") return <AtendenteDevolucao onBack={()=>setView("home")}/>;
+  if(view==="consulta") return <AtendenteConsulta onBack={()=>setView("home")}/>;
+  return <AtendenteHome onNavigate={v=>{ if(v==="logout") onLogout(); else setView(v); }}/>;
+}
+
+/* -------------------------------------------------------------------------- */
+/* ROOT COMPONENT (LOGIN)                                                     */
+/* -------------------------------------------------------------------------- */
+
+function Login({ onLogin }) {
+  const [matricula, setMatricula] = React.useState("");
+  const [senha, setSenha] = React.useState("");
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    // Simula validação e redireciona padrão para Atendente
+    setTimeout(() => { setIsLoading(false); onLogin("attendant"); }, 1200);
+  };
+
+  const handleSimulate = (role) => {
+    setMatricula(role==="admin"?"diretoria@unifor.br":"balcao@unifor.br");
+    setSenha("••••••••");
+    setTimeout(() => onLogin(role), 400);
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-slate-50 relative overflow-hidden fade-in">
+      {/* Background Decorativo Clean */}
+      <div className="absolute top-0 left-0 w-full h-1/2 bg-blue-600 rounded-b-[100px] shadow-sm -translate-y-10"></div>
+      
+      <div className="w-full max-w-[400px] px-4 relative z-10">
+        <div className="flex flex-col items-center mb-8">
+          <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center shadow-lg mb-4 border border-slate-100">
+            <GraduationCap size={36} className="text-blue-600"/>
+          </div>
+          <h1 className="text-white text-2xl font-bold tracking-wide">Sistema GAC</h1>
+          <p className="text-blue-100 text-sm font-medium mt-1">Gestão de Ativos do CCT</p>
+        </div>
+        
+        <div className="bg-white border border-slate-200 rounded-2xl shadow-xl px-8 py-8">
+          <form onSubmit={handleLogin} className="flex flex-col gap-5">
+            <div className="flex flex-col gap-2">
+              <label className="text-slate-700 text-xs font-bold uppercase tracking-wider">Matrícula Institucional</label>
+              <div className="relative">
+                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"><User size={16}/></span>
+                <input type="text" placeholder="Ex: 123456" value={matricula} onChange={e=>setMatricula(e.target.value)} className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 text-slate-800 font-medium placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors bg-slate-50" required/>
+              </div>
+            </div>
+            <div className="flex flex-col gap-2">
+              <label className="text-slate-700 text-xs font-bold uppercase tracking-wider">Senha de Acesso</label>
+              <div className="relative">
+                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"><Lock size={16}/></span>
+                <input type={showPassword?"text":"password"} placeholder="Sua senha corporativa" value={senha} onChange={e=>setSenha(e.target.value)} className="w-full pl-10 pr-10 py-3 rounded-xl border border-slate-200 text-slate-800 font-medium placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors bg-slate-50" required/>
+                <button type="button" onClick={()=>setShowPassword(v=>!v)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-600 transition-colors p-1" tabIndex={-1}>
+                  {showPassword?<EyeOff size={16}/>:<Eye size={16}/>}
+                </button>
+              </div>
+            </div>
+            <button type="submit" disabled={isLoading} className="w-full py-3.5 rounded-xl text-white font-bold text-sm bg-blue-600 hover:bg-blue-700 shadow-sm transition-all mt-2 flex justify-center items-center gap-2">
+              {isLoading?<><RotateCcw size={16} className="animate-spin"/> Autenticando...</>:"Entrar no Sistema"}
+            </button>
+          </form>
+          
+          <div className="flex flex-col items-center gap-3 mt-8 pt-6 border-t border-slate-100">
+            <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider">Simulação do Protótipo</p>
+            <div className="flex flex-col w-full gap-2">
+              <button type="button" onClick={()=>handleSimulate("attendant")} className="w-full py-2 rounded-lg text-slate-500 hover:bg-slate-50 border border-transparent hover:border-slate-200 transition-all text-xs font-bold">[ Logar como Operador / Balcão ]</button>
+              <button type="button" onClick={()=>handleSimulate("admin")} className="w-full py-2 rounded-lg text-slate-500 hover:bg-slate-50 border border-transparent hover:border-slate-200 transition-all text-xs font-bold">[ Logar como Administrador / CCT ]</button>
+            </div>
+          </div>
+        </div>
+        <p className="text-center text-slate-400 mt-8 text-xs font-medium">© 2026 UNIFOR — Projeto GAC. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  const [session, setSession] = React.useState(null);
+  if(!session) return <Login onLogin={role=>setSession(role)}/>;
+  if(session==="admin") return <PainelAdmin onLogout={()=>setSession(null)}/>;
+  return <PainelAtendente onLogout={()=>setSession(null)}/>;
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
+</body>
+</html>
